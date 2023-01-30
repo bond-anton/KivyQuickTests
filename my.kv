@@ -1,38 +1,82 @@
+<JackalLabel@Label>:
+    text_size: self.size
+
+<JackalItemLabel@JackalLabel>:
+    halign: 'left'
+    valign: 'middle'
+    font_size: sp(25)
+
+<JackalResultLabel@JackalLabel>:
+    halign: 'left'
+    valign: 'middle'
+    font_size: sp(25)
+    bold: True
+
+<JackalLabelCredits@JackalLabel>:
+    halign: 'center'
+    valign: 'middle'
+
 <Container>:
-    rows: 3
+    rows: 4
+
+    input_number: input_number
+    x2: x2
+    x3: x3
+    x10: x10
 
     AnchorLayout:
+        size_hint: 1, None
+        height: sp(65)
+
         TextInput:
+            id: input_number
             multiline: False
+            font_size: sp(45)
 
     GridLayout:
         cols: 2
+        padding: (sp(25), sp(10), sp(25), sp(10))
+
+        BoxLayout:
+            size_hint: None, 1
+            width: sp(250)
+            orientation: 'vertical'
+
+            JackalItemLabel:
+                text: 'x2'
+            JackalItemLabel:
+                text: 'x3'
+            JackalItemLabel:
+                text: 'x10'
+
 
         BoxLayout:
             orientation: 'vertical'
 
-            Label:
-                text: 'Action 1'
-            Label:
-                text: 'Action 2'
-            Label:
-                text: 'Action 3'
-
-
-        BoxLayout:
-            orientation: 'vertical'
-
-            Button:
-                text: 'Do 1'
-
-            Button:
-                text: 'Do 2'
-
-            Button:
-                text: 'Do 3'
+            JackalResultLabel:
+                id: x2
+                text: 'x2'
+            JackalResultLabel:
+                id: x3
+                text: 'x3'
+            JackalResultLabel:
+                id: x10
+                text: 'x10'
 
     BoxLayout:
+        size_hint: 1, 0.25
+        padding: (sp(100), sp(10), sp(100), sp(10))
         orientation: 'vertical'
 
-        Label:
+        Button:
+            text: 'Calculate'
+            font_size: sp(45)
+            on_release: root.calculate()
+
+    BoxLayout:
+        size_hint: 1, None
+        height: sp(30)
+        orientation: 'vertical'
+
+        JackalLabelCredits:
             text: 'Научные Технологии и Сервис'
