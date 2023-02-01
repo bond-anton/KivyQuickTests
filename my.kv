@@ -17,8 +17,10 @@
     valign: 'middle'
 
 <Container>:
-    rows: 4
+    rows: 5
 
+    datetime: datetime
+    calculate_button: calculate_button
     input_number: input_number
     x2: x2
     x3: x3
@@ -69,9 +71,19 @@
         orientation: 'vertical'
 
         Button:
+            id: calculate_button
             text: 'Calculate'
             font_size: sp(45)
             on_release: root.calculate()
+
+    BoxLayout:
+        size_hint: 1, None
+        height: sp(30)
+        orientation: 'vertical'
+
+        JackalLabelCredits:
+            id: datetime
+            text: 'Datetime'
 
     BoxLayout:
         size_hint: 1, None
