@@ -95,9 +95,12 @@ class MyApp(App):
                 nursery.cancel_scope.cancel()
 
             nursery.start_soon(run_wrapper)
+            self.spawn_task(get_datetime, self.process_datetime, interval=1, repeats=-1,
+                            task_name='My clock', task_default_result='No signal from clock', task_timeout=0.5,
+                            processor_name='Clock processor')
 
     def spawn_task(self, task_coro, processor_coro, interval=1, repeats=-1,
-                   task_name=None, task_default_result=None, task_timeout=1, task_args=None, task_kwargs=None,
+                   task_name=None, task_default_result=None, task_timeout=1.0, task_args=None, task_kwargs=None,
                    processor_name=None, processor_args=None, processor_kwargs=None):
         if task_name is None:
             task_name = 'Task'
