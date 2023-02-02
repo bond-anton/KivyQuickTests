@@ -3,14 +3,6 @@ import anyio
 import importlib
 
 
-trio_spec = importlib.util.find_spec('trio')
-trio_found = trio_spec is not None
-if trio_found:
-    async_lib = 'trio'
-else:
-    async_lib = 'asyncio'
-
-
 async def task_consumer(processing_coro, receive_channel, name, *args, **kwargs):
     print(f'Consumer {name} has started')
     async with receive_channel:
@@ -45,12 +37,24 @@ class AsyncApp(App):
 
     __task_group = None
 
+    def __init__(self, async_lib=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if async_lib is None:
+            trio_spec = importlib.util.find_spec('trio')
+            trio_found = trio_spec is not None
+            if trio_found:
+                self.async_lib = 'trio'
+            else:
+                self.async_lib = 'asyncio'
+        else:
+            self.async_lib = async_lib
+
     async def app_func(self):
         async with anyio.create_task_group() as task_group:
             self.__task_group = task_group
 
             async def run_wrapper():
-                await self.async_run(async_lib=async_lib)
+                await self.async_run(async_lib=self.async_lib)
                 print('App done')
                 await task_group.cancel_scope.cancel()
 

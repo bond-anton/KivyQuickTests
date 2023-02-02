@@ -5,7 +5,7 @@ from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
 from kivy.core.window import Window
 
-from AsyncAppAnyio import AsyncApp, async_lib
+from AsyncAppAnyio import AsyncApp
 
 import anyio
 
@@ -73,4 +73,5 @@ class MyApp(AsyncApp):
 
 
 if __name__ == '__main__':
-    anyio.run(MyApp().app_func, backend=async_lib)
+    async_lib = 'asyncio'
+    anyio.run(MyApp(async_lib).app_func, backend=async_lib)

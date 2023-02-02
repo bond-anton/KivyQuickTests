@@ -2,9 +2,6 @@ from kivy.app import App
 import trio
 
 
-async_lib = 'trio'
-
-
 async def task_consumer(processing_coro, receive_channel, name, *args, **kwargs):
     print(f'Consumer {name} has started')
     async with receive_channel:
