@@ -5,7 +5,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.core.window import Window
 import trio
 
-Window.size = (400, 600)
+Window.size = (1024, 600)
 
 
 async def read_sensor_value():

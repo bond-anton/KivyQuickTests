@@ -10,7 +10,7 @@ from AsyncAppTrio import AsyncApp
 import trio
 
 
-Window.size = (400, 600)
+Window.size = (1024, 600)
 
 
 async def read_sensor_value():
@@ -53,6 +53,8 @@ class Container(GridLayout):
 
 class MyApp(AsyncApp):
 
+    dt = 0
+
     def build(self):
         return Container()
 
@@ -60,6 +62,10 @@ class MyApp(AsyncApp):
         self.spawn_task(get_datetime, self.process_datetime, interval=1, repeats=-1,
                         task_name='My clock', task_default_result='No signal from clock', task_timeout=0.5,
                         processor_name='Clock processor')
+        self.spawn_task(self.sin_scope, self.process_scope, interval=0.1, repeats=-1,
+                        task_name='My scope', task_default_result={'x': np.zeros(100), 'y': np.zeros(100)},
+                        task_timeout=0.5,
+                        processor_name='Scope processor')
 
     async def process_calculation_results(self, value):
         print(value)
@@ -70,6 +76,18 @@ class MyApp(AsyncApp):
 
     async def process_datetime(self, value):
         self.root.ids.datetime.text = value
+
+    async def sin_scope(self):
+        x = np.linspace(0, 2 * np.pi, num=100, endpoint=True)
+        y = np.sin(x + 2 * np.pi / 200 * self.dt)
+        self.dt += 1
+        if self.dt == 200:
+            self.dt = 0
+        return {'x': x, 'y': y}
+
+    async def process_scope(self, value):
+        # print(value)
+        self.root.ids.plotter.update_line(value['x'], value['y'])
 
 
 if __name__ == '__main__':

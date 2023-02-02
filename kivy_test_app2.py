@@ -10,7 +10,7 @@ from AsyncAppAnyio import AsyncApp
 import anyio
 
 
-Window.size = (400, 600)
+Window.size = (1024, 600)
 
 
 async def read_sensor_value():
