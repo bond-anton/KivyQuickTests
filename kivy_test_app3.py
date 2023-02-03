@@ -62,7 +62,7 @@ class MyApp(AsyncApp):
         self.spawn_task(get_datetime, self.process_datetime, interval=1, repeats=-1,
                         task_name='My clock', task_default_result='No signal from clock', task_timeout=0.5,
                         processor_name='Clock processor')
-        self.spawn_task(self.sin_scope, self.process_scope, interval=0.1, repeats=-1,
+        self.spawn_task(self.sin_scope, self.process_scope, interval=0.01, repeats=-1,
                         task_name='My scope', task_default_result={'x': np.zeros(100), 'y': np.zeros(100)},
                         task_timeout=0.5,
                         processor_name='Scope processor')
