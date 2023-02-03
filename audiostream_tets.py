@@ -11,4 +11,6 @@ notes = {
 }
 
 octave = 6
-sine(frequency=notes['F'] * (2**octave), duration=1.0)  # plays a 1s sine wave at 440 Hz
+tune = notes['A'] * (2**octave)
+print(tune)
+sine(frequency=tune, duration=10.0)  # plays a 1s sine wave at 440 Hz
